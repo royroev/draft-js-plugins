@@ -57,6 +57,7 @@ export default class Entry extends Component {
   mouseDown = this.props.mouseDown;
 
   render() {
+// eslint-disable-next-line no-unused-vars
     const { cacheBustParam, imagePath, imageType, theme = {}, emoji, useNativeArt } = this.props;
     const { isFocused } = this.state;
 
@@ -67,11 +68,9 @@ export default class Entry extends Component {
     } else {
       // short name to image url code steal from emojione source code
       const shortNameForImage = emojione.emojioneList[emoji].unicode[emojione.emojioneList[emoji].unicode.length - 1];
-      const fullImagePath = `${imagePath}${shortNameForImage}.${imageType}${cacheBustParam}`;
       emojiDisplay = (
-        <img
-          src={fullImagePath}
-          className={theme.emojiSelectPopoverEntryIcon}
+        <span
+          className={`${theme.emojiSuggestionsEntryIcon} emojione emojione-${shortNameForImage}`}
           draggable={false}
           role="presentation"
         />

@@ -36,6 +36,7 @@ export default class Entry extends Component {
   };
 
   render() {
+// eslint-disable-next-line no-unused-vars
     const { theme = {}, imagePath, imageType, cacheBustParam, useNativeArt } = this.props;
     const className = this.props.isFocused ? theme.emojiSuggestionsEntryFocused : theme.emojiSuggestionsEntry;
 
@@ -46,11 +47,9 @@ export default class Entry extends Component {
     } else {
       // short name to image url code steal from emojione source code
       const shortNameForImage = emojione.emojioneList[this.props.emoji].unicode[emojione.emojioneList[this.props.emoji].unicode.length - 1];
-      const fullImagePath = `${imagePath}${shortNameForImage}.${imageType}${cacheBustParam}`;
       emojiDisplay = (
-        <img
-          src={fullImagePath}
-          className={theme.emojiSuggestionsEntryIcon}
+        <span
+          className={`${theme.emojiSuggestionsEntryIcon} emojione emojione-${shortNameForImage}`}
           role="presentation"
         />
       );

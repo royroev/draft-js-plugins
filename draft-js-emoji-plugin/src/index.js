@@ -3,6 +3,8 @@ import { Map, List } from 'immutable';
 import keys from 'lodash.keys';
 import decorateComponentWithProps from 'decorate-component-with-props';
 import { EditorState } from 'draft-js';
+// eslint-disable-next-line import/no-unresolved
+import '!style-loader!css-loader!./emoji64.css';
 import Emoji from './components/Emoji';
 import EmojiSuggestions from './components/EmojiSuggestions';
 import EmojiSuggestionsPortal from './components/EmojiSuggestionsPortal';
@@ -116,28 +118,28 @@ export default (config = {}) => {
     },
   };
 
-  // Styles are overwritten instead of merged as merging causes a lot of confusion.
-  //
-  // Why? Because when merging a developer needs to know all of the underlying
-  // styles which needs a deep dive into the code. Merging also makes it prone to
-  // errors when upgrading as basically every styling change would become a major
-  // breaking change. 1px of an increased padding can break a whole layout.
+    // Styles are overwritten instead of merged as merging causes a lot of confusion.
+    //
+    // Why? Because when merging a developer needs to know all of the underlying
+    // styles which needs a deep dive into the code. Merging also makes it prone to
+    // errors when upgrading as basically every styling change would become a major
+    // breaking change. 1px of an increased padding can break a whole layout.
   const {
-    theme = defaultTheme,
-    imagePath = defaultImagePath,
-    imageType = defaultImageType,
-    allowImageCache,
-    positionSuggestions = defaultPositionSuggestions,
-    priorityList,
-    selectGroups,
-    selectButtonContent,
-    toneSelectOpenDelay,
-    useNativeArt,
-  } = config;
+        theme = defaultTheme,
+        imagePath = defaultImagePath,
+        imageType = defaultImageType,
+        allowImageCache,
+        positionSuggestions = defaultPositionSuggestions,
+        priorityList,
+        selectGroups,
+        selectButtonContent,
+        toneSelectOpenDelay,
+        useNativeArt,
+    } = config;
 
   const cacheBustParam = allowImageCache ? '' : defaultCacheBustParam;
 
-  // if priorityList is configured in config then set priorityList
+    // if priorityList is configured in config then set priorityList
   if (priorityList) emojiList.setPriorityList(priorityList);
   const suggestionsProps = {
     ariaProps,
@@ -168,7 +170,13 @@ export default (config = {}) => {
     decorators: [
       {
         strategy: emojiStrategy,
-        component: decorateComponentWithProps(Emoji, { theme, imagePath, imageType, cacheBustParam, useNativeArt }),
+        component: decorateComponentWithProps(Emoji, {
+          theme,
+          imagePath,
+          imageType,
+          cacheBustParam,
+          useNativeArt
+        }),
       },
       {
         strategy: emojiSuggestionsStrategy,
@@ -184,7 +192,7 @@ export default (config = {}) => {
         ariaActiveDescendantID: ariaProps.ariaActiveDescendantID,
         ariaOwneeID: ariaProps.ariaOwneeID,
       }
-    ),
+        ),
 
     initialize: ({ getEditorState, setEditorState }) => {
       store.getEditorState = getEditorState;
@@ -200,14 +208,14 @@ export default (config = {}) => {
       let newEditorState = attachImmutableEntitiesToEmojis(editorState);
 
       if (!newEditorState.getCurrentContent().equals(editorState.getCurrentContent())) {
-        // Forcing the current selection ensures that it will be at it's right place.
-        // This solves the issue where inserting an Emoji on OSX with Apple's Emoji
-        // selector led to the right selection the data, but wrong position in
-        // the contenteditable.
+                // Forcing the current selection ensures that it will be at it's right place.
+                // This solves the issue where inserting an Emoji on OSX with Apple's Emoji
+                // selector led to the right selection the data, but wrong position in
+                // the contenteditable.
         newEditorState = EditorState.forceSelection(
-          newEditorState,
-          newEditorState.getSelection(),
-        );
+                    newEditorState,
+                    newEditorState.getSelection(),
+                );
       }
 
       if (callbacks.onChange) return callbacks.onChange(newEditorState);
