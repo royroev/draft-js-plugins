@@ -135,6 +135,7 @@ export default (config = {}) => {
         selectButtonContent,
         toneSelectOpenDelay,
         useNativeArt,
+        popoverElementId,
     } = config;
 
   const cacheBustParam = allowImageCache ? '' : defaultCacheBustParam;
@@ -163,6 +164,7 @@ export default (config = {}) => {
     selectButtonContent,
     toneSelectOpenDelay,
     useNativeArt,
+    popoverElementId,
   };
   return {
     EmojiSuggestions: decorateComponentWithProps(EmojiSuggestions, suggestionsProps),

@@ -29,6 +29,7 @@ export default class EmojiSelect extends Component {
     ]),
     toneSelectOpenDelay: PropTypes.number,
     useNativeArt: PropTypes.bool,
+    popoverElementId: PropTypes.string,
   };
 
   static defaultProps = {

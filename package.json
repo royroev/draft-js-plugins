@@ -1,6 +1,6 @@
 {
   "name": "draft-js-plugins",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "A Plugin Architecture on top of Draft.JS",
   "author": {
     "name": "Nik Graf",
@@ -117,5 +117,8 @@
     "to-style": "^1.3.3",
     "union-class-names": "^1.0.0",
     "webpack": "^2.2.1"
+  },
+  "publishConfig": {
+    "registry": "https://npm.sberned.ru/private/"
   }
 }
