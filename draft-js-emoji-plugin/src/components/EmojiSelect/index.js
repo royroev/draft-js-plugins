@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import strategy from 'emojione/emoji.json';
 import createEmojisFromStrategy from '../../utils/createEmojisFromStrategy';
@@ -45,6 +46,41 @@ export default class EmojiSelect extends Component {
   // the selector should close
   componentDidMount() {
     document.addEventListener('click', this.closePopover);
+
+    if (this.props.popoverElementId) {
+      const popoverElement = document.getElementById(this.props.popoverElementId);
+
+      if (popoverElement) {
+        const {
+          cacheBustParam,
+          imagePath,
+          imageType,
+          theme = {},
+          store,
+          selectGroups,
+          toneSelectOpenDelay,
+          useNativeArt,
+        } = this.props;
+
+        ReactDOM.render(
+          (
+            <Popover
+              cacheBustParam={cacheBustParam}
+              imagePath={imagePath}
+              imageType={imageType}
+              theme={theme}
+              store={store}
+              groups={selectGroups}
+              emojis={emojis}
+              toneSelectOpenDelay={toneSelectOpenDelay}
+              isOpen={this.state.isOpen}
+              useNativeArt={useNativeArt}
+            />
+          ),
+          popoverElement,
+        );
+      }
+    }
   }
 
   componentWillUnmount() {
@@ -89,6 +125,7 @@ export default class EmojiSelect extends Component {
       selectButtonContent,
       toneSelectOpenDelay,
       useNativeArt,
+      popoverElementId,
     } = this.props;
     const buttonClassName = this.state.isOpen ?
       theme.emojiSelectButtonPressed :
@@ -103,18 +140,20 @@ export default class EmojiSelect extends Component {
         >
           {selectButtonContent}
         </button>
-        <Popover
-          cacheBustParam={cacheBustParam}
-          imagePath={imagePath}
-          imageType={imageType}
-          theme={theme}
-          store={store}
-          groups={selectGroups}
-          emojis={emojis}
-          toneSelectOpenDelay={toneSelectOpenDelay}
-          isOpen={this.state.isOpen}
-          useNativeArt={useNativeArt}
-        />
+        {popoverElementId ? null : (
+          <Popover
+            cacheBustParam={cacheBustParam}
+            imagePath={imagePath}
+            imageType={imageType}
+            theme={theme}
+            store={store}
+            groups={selectGroups}
+            emojis={emojis}
+            toneSelectOpenDelay={toneSelectOpenDelay}
+            isOpen={this.state.isOpen}
+            useNativeArt={useNativeArt}
+          />
+        )}
       </div>
     );
   }
